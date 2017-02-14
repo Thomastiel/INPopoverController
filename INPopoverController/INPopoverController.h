@@ -56,6 +56,12 @@
    Default value: `INPopoverAnimationTypePop` **/
 @property (nonatomic, assign) INPopoverAnimationType animationType;
 
+/** Whether the popover will move to completely fit in the main window **/
+@property (nonatomic, assign) BOOL fitsInWindow;
+
+/** The margin off the popover to the main window if it moves to fit **/
+@property (nonatomic, assign) CGFloat fitWindowMargin;
+
 /** The content view controller from which content is displayed in the popover **/
 @property (nonatomic, strong) NSViewController *contentViewController;
 

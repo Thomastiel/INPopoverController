@@ -14,6 +14,7 @@
 		_cornerRadius = 4.0;
 		_arrowSize = NSMakeSize(23.0, 12.0);
 		_arrowDirection = INPopoverArrowDirectionLeft;
+		_arrowOffset = CGPointZero;
 	}
 	return self;
 }
@@ -76,8 +77,10 @@
 	// Bottom left corner
 	[path appendBezierPathWithArcWithCenter:NSMakePoint(minX, minY) radius:radius startAngle:180.0 endAngle:270.0];
 	if (self.arrowDirection == INPopoverArrowDirectionDown) {
-		CGFloat midX = NSMidX(drawingRect);
-		NSPoint points[3];
+		CGFloat midX = NSMidX(drawingRect) + self.arrowOffset.x;
+        midX = MIN(midX, maxX - floor(arrowWidth / 2.0)); // Fit possibly offset arrow inside frame
+        midX = MAX(midX, minX + floor(arrowWidth / 2.0));
+        NSPoint points[3];
 		points[0] = NSMakePoint(floor(midX - (arrowWidth / 2.0)), minY - radius); // Starting point
 		points[1] = NSMakePoint(floor(midX), points[0].y - arrowHeight); // Arrow tip
 		points[2] = NSMakePoint(floor(midX + (arrowWidth / 2.0)), points[0].y); // Ending point
@@ -86,7 +89,9 @@
 	// Bottom right corner
 	[path appendBezierPathWithArcWithCenter:NSMakePoint(maxX, minY) radius:radius startAngle:270.0 endAngle:360.0];
 	if (self.arrowDirection == INPopoverArrowDirectionRight) {
-		CGFloat midY = NSMidY(drawingRect);
+		CGFloat midY = NSMidY(drawingRect) + self.arrowOffset.y;
+        midY = MIN(midY, maxY - floor(arrowWidth / 2.0));
+        midY = MAX(midY, minY + floor(arrowWidth / 2.0));
 		NSPoint points[3];
 		points[0] = NSMakePoint(maxX + radius, floor(midY - (arrowWidth / 2.0)));
 		points[1] = NSMakePoint(points[0].x + arrowHeight, floor(midY));
@@ -96,8 +101,10 @@
 	// Top right corner
 	[path appendBezierPathWithArcWithCenter:NSMakePoint(maxX, maxY) radius:radius startAngle:0.0 endAngle:90.0];
 	if (self.arrowDirection == INPopoverArrowDirectionUp) {
-		CGFloat midX = NSMidX(drawingRect);
-		NSPoint points[3];
+		CGFloat midX = NSMidX(drawingRect) + self.arrowOffset.x;
+        midX = MIN(midX, maxX - floor(arrowWidth / 2.0));
+        midX = MAX(midX, minX + floor(arrowWidth / 2.0));
+        NSPoint points[3];
 		points[0] = NSMakePoint(floor(midX + (arrowWidth / 2.0)), maxY + radius);
 		points[1] = NSMakePoint(floor(midX), points[0].y + arrowHeight);
 		points[2] = NSMakePoint(floor(midX - (arrowWidth / 2.0)), points[0].y);
@@ -106,8 +113,10 @@
 	// Top left corner
 	[path appendBezierPathWithArcWithCenter:NSMakePoint(minX, maxY) radius:radius startAngle:90.0 endAngle:180.0];
 	if (self.arrowDirection == INPopoverArrowDirectionLeft) {
-		CGFloat midY = NSMidY(drawingRect);
-		NSPoint points[3];
+		CGFloat midY = NSMidY(drawingRect) + self.arrowOffset.y;
+        midY = MIN(midY, maxY - floor(arrowWidth / 2.0));
+        midY = MAX(midY, minY + floor(arrowWidth / 2.0));
+        NSPoint points[3];
 		points[0] = NSMakePoint(minX - radius, floor(midY + (arrowWidth / 2.0)));
 		points[1] = NSMakePoint(points[0].x - arrowHeight, floor(midY));
 		points[2] = NSMakePoint(points[0].x, floor(midY - (arrowWidth / 2.0)));
